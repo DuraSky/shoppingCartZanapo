@@ -33,14 +33,17 @@ export const removeFromCart = (cart, itemIndex) => {
     .filter((item) => item !== null);
 };
 
-export const changeQuantity = (cart, value, index) => {
+export const changeQuantity = (cart, value, itemIndex) => {
   const updatedValue = Number(value);
   if (updatedValue < 1) {
     return cart; // Return the unchanged cart if the value is less than 1
   }
-  return cart.map((item, i) =>
-    i === index ? { ...item, mnozstvi: updatedValue } : item
-  );
+  return cart.map((item, i) => {
+    if (i === itemIndex) {
+      return { ...item, mnozstvi: updatedValue };
+    }
+    return item; // Return the unchanged item for other indices
+  });
 };
 
 export const getCartPrice = (cart) => {
