@@ -1,0 +1,27 @@
+{
+  "cart": [
+    {
+      "produkt": "Letky Harrows Quadro",
+      "dostupnost": "Skladem ihned k odeslání",
+      "mnozstvi": 1,
+      "skladem": 5,
+      "cena_za_kus": 29
+    },
+    {
+      "produkt": "Šipky Harrows Matrix soft - K",
+      "dostupnost": "Skladem ihned k odeslání",
+      "hmotnost": "14g",
+      "mnozstvi": 1,
+      "skladem": 1,
+      "cena_za_kus": 299
+    },
+    {
+      "produkt": "Dřevěné šachy Ambassador De lux",
+      "dostupnost": "Skladem ihned k odeslání",
+      "barva": "hnědá",
+      "mnozstvi": 2,
+      "skladem": 3,
+      "cena_za_kus": 1990
+    }
+  ]
+}
