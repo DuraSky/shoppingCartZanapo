@@ -1,4 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, React } from "react";
+import {
+  //increaseQuantity,
+  //decreaseQuantity,
+  removeFromCart,
+  changeQuantity,
+  getCartPrice,
+} from "./utils/cartUtil";
 
 const ShoppingCart = () => {
   const [cart, setCart] = useState([]);
@@ -15,133 +22,65 @@ const ShoppingCart = () => {
     console.log(cart);
   }, [cart]);
 
-  const handleIncreaseQuantity = (itemIndex) => {
-    setCart((prevCart) =>
-      prevCart.map((item, index) => {
-        if (index === itemIndex) {
-          return { ...item, mnozstvi: item.mnozstvi + 1 };
-        }
-        return item;
-      })
-    );
-  };
-
-  const handleDecreaseQuantity = (itemIndex) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item, index) => {
-          if (index === itemIndex) {
-            if (item.mnozstvi > 1) {
-              return { ...item, mnozstvi: item.mnozstvi - 1 };
-            } else {
-              return null;
-            }
-          }
-
-          return item;
-        })
-        .filter((item) => item !== null)
-    );
-  };
-
   const handleRemoveFromCart = (itemIndex) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item, index) => {
-          if (index === itemIndex) {
-            return null;
-          } else {
-            return item;
-          }
-        })
-        .filter((item) => item !== null)
-    );
+    setCart((prevCart) => removeFromCart(prevCart, itemIndex));
   };
 
-  const getCartPrice = () => {
-    cart.map((item) => {
-      return <p>{item}</p>;
-    });
+  const handleItemChange = (value, index) => {
+    setCart((prevCart) => changeQuantity(prevCart, value, index));
   };
 
   return (
     <>
       <div className="insideTheCart">
         <h1 className="text-2xl font-bold text-gray-900">Kosik:</h1>
-        <div className="flex gap-40">
-          <div>
-            <h2>Produkt</h2>
-            {cart.map((item, index) => (
-              <div key={index}>
+        <div className="flex flex-col gap-4">
+          {cart.map((item, index) => (
+            <div key={index} className="flex gap-40">
+              <div className="">
+                <h2>Produkt</h2>
                 <p>{item.produkt}</p>
               </div>
-            ))}
-          </div>
-          <div>
-            <h2>Dostupnost</h2>
-            {cart.map((item, index) => (
-              <div key={index}>
+              <div>
+                <h2>Dostupnost</h2>
                 <p>{item.dostupnost}</p>
               </div>
-            ))}
-          </div>
-          <div>
-            <h2>Mnozstvi</h2>
-            {cart.map((item, index) => (
-              <div key={index} className="flex">
-                <p>{item.mnozstvi}</p>
-                <button
-                  type="button"
-                  onClick={() => handleIncreaseQuantity(index)}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold  px-1 rounded"
-                >
-                  +
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDecreaseQuantity(index)}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold  px-1 rounded"
-                >
-                  -
-                </button>
+              <div>
+                <h2>Mnozstvi</h2>
+                <input
+                  type="number"
+                  value={item.mnozstvi}
+                  onChange={(event) =>
+                    handleItemChange(event.target.value, index)
+                  }
+                  className="w-12 text-center border border-gray-300 rounded"
+                />
               </div>
-            ))}
-          </div>
-          <div>
-            <h2>Cena za kus</h2>
-            {cart.map((item, index) => (
-              <div key={index}>
+              <div>
+                <h2>Cena za kus</h2>
                 <p>{item.cena_za_kus}</p>
               </div>
-            ))}
-          </div>
-          <div>
-            <h2>Cena vc. DPH</h2>
-            {cart.map((item, index) => (
-              <div key={index}>
+              <div>
+                <h2>Cena vc. DPH</h2>
                 <p>{item.mnozstvi * item.cena_za_kus}</p>
               </div>
-            ))}
-          </div>
-          <div>
-            <h2>Removal</h2>
-            {cart.map((item, index) => (
-              <div key={index}>
+              <div>
+                <h2>Removal</h2>
                 <button
                   type="button"
                   onClick={() => handleRemoveFromCart(index)}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold  px-1 rounded"
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold px-1 rounded"
                 >
                   X
-                </button>{" "}
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
       <div className="priceCalc">
         <h2 className="font-bold text-gray-900">Celkova Cena</h2>
-        <p>{getCartPrice}</p>
+        <p>{getCartPrice(cart)} Kč</p>
       </div>
     </>
   );
