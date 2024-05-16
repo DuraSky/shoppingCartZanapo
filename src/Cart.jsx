@@ -1,14 +1,15 @@
 import { useState, useEffect, React } from "react";
 import {
-  //increaseQuantity,
-  //decreaseQuantity,
   removeFromCart,
   changeQuantity,
   getCartPrice,
+  getFreeShippingMessage,
+  getProgressShipping,
 } from "./utils/cartUtil";
 
 const ShoppingCart = () => {
   const [cart, setCart] = useState([]);
+  const [discountField, setDiscountField] = useState(true);
 
   useEffect(() => {
     fetch("./assets/products.json")
@@ -21,14 +22,6 @@ const ShoppingCart = () => {
   useEffect(() => {
     console.log(cart);
   }, [cart]);
-
-  const handleRemoveFromCart = (itemIndex) => {
-    setCart((prevCart) => removeFromCart(prevCart, itemIndex));
-  };
-
-  const handleItemChange = (value, index) => {
-    setCart((prevCart) => changeQuantity(prevCart, value, index));
-  };
 
   return (
     <>
@@ -51,7 +44,9 @@ const ShoppingCart = () => {
                   type="number"
                   value={item.mnozstvi}
                   onChange={(event) =>
-                    handleItemChange(event.target.value, index)
+                    setCart((prevCart) =>
+                      changeQuantity(prevCart, event.target.value, index)
+                    )
                   }
                   className="w-12 text-center border border-gray-300 rounded"
                 />
@@ -68,7 +63,9 @@ const ShoppingCart = () => {
                 <h2>Removal</h2>
                 <button
                   type="button"
-                  onClick={() => handleRemoveFromCart(index)}
+                  onClick={() =>
+                    setCart((prevCart) => removeFromCart(prevCart, index))
+                  }
                   className="bg-red-500 hover:bg-red-700 text-white font-bold px-1 rounded"
                 >
                   X
@@ -81,6 +78,37 @@ const ShoppingCart = () => {
       <div className="priceCalc">
         <h2 className="font-bold text-gray-900">Celkova Cena</h2>
         <p>{getCartPrice(cart)} Kč</p>
+      </div>
+      <div className="discountCode">
+        {discountField && (
+          <div>
+            <label>
+              Mám dárkový poukaz, slevový kupón nebo kód na dárek
+              <input type="checkbox" />
+            </label>
+            <input type="text" placeholder="hello world"></input>
+          </div>
+        )}
+      </div>
+      <div className="progressBar">
+        <h2>{getFreeShippingMessage(cart)}</h2>
+        <div
+          className="progress"
+          style={{ height: "15px", width: "300px", backgroundColor: "#ccc" }}
+        >
+          <div
+            className="progress-fill"
+            style={{
+              width: `${getProgressShipping(cart)}%`,
+              height: "100%",
+              backgroundColor: "#4caf50",
+              textAlign: "center",
+              lineHeight: "30px",
+              color: "white",
+            }}
+          ></div>
+          <p>{getCartPrice(cart)} / 4500</p>
+        </div>
       </div>
     </>
   );

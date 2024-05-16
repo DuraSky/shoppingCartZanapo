@@ -1,27 +1,3 @@
-// export const increaseQuantity = (cart, itemIndex) => {
-//   return cart.map((item, index) => {
-//     if (index === itemIndex) {
-//       return { ...item, mnozstvi: item.mnozstvi + 1 };
-//     }
-//     return item;
-//   });
-// };
-
-// export const decreaseQuantity = (cart, itemIndex) => {
-//   return cart
-//     .map((item, index) => {
-//       if (index === itemIndex) {
-//         if (item.mnozstvi > 1) {
-//           return { ...item, mnozstvi: item.mnozstvi - 1 };
-//         } else {
-//           return null;
-//         }
-//       }
-//       return item;
-//     })
-//     .filter((item) => item !== null);
-// };
-
 export const removeFromCart = (cart, itemIndex) => {
   return cart
     .map((item, index) => {
@@ -51,4 +27,26 @@ export const getCartPrice = (cart) => {
     (total, item) => total + item.mnozstvi * item.cena_za_kus,
     0
   );
+};
+
+export const getFreeShippingMessage = (cart) => {
+  const freeShipping = 4500;
+  const remainingForFreeShipping = freeShipping - getCartPrice(cart);
+
+  if (remainingForFreeShipping <= 0) {
+    return "Dopravu mate zdarma";
+  } else {
+    console.log(remainingForFreeShipping);
+    return `Do dopravy zdarma vam zbyva ${remainingForFreeShipping} Kč`;
+  }
+};
+
+export const getProgressShipping = (cart) => {
+  const freeShipping = 4500;
+  const remainingForFreeShipping = Math.min(
+    (getCartPrice(cart) / freeShipping) * 100,
+    100
+  );
+
+  return remainingForFreeShipping.toFixed(1);
 };
