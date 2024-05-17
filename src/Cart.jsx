@@ -1,16 +1,21 @@
 import { useState, useEffect, React } from "react";
 import {
-  removeFromCart,
-  changeQuantity,
   getCartPrice,
   getFreeShippingMessage,
   getProgressShipping,
 } from "./utils/cartUtil";
 
+import CartItem from "./CartItem";
+
 const ShoppingCart = () => {
   const [cart, setCart] = useState([]);
-  const [discountField, setDiscountField] = useState(true);
 
+  //staty pro slevovy kupon
+  const [discountCode, setDiscountCode] = useState("");
+  const [showDiscountForm, setShowDiscountForm] = useState(true); //for the whole form element, display on load
+  const [showDiscountField, setShowDiscountField] = useState(false); //only for the input element, don't display on load
+
+  //fetch jsonu
   useEffect(() => {
     fetch("./assets/products.json")
       .then((response) => response.json())
@@ -18,10 +23,20 @@ const ShoppingCart = () => {
       .catch((error) => console.error("Error fetching JSON:", error));
   }, []);
 
-  //Console logger to check cart status on every update
+  // Console logger to check cart status on every update
   useEffect(() => {
     console.log(cart);
   }, [cart]);
+
+  // prozatimni kontrola slevoveho kodu
+  const checkDiscountCode = (discountCode) => {
+    if (discountCode === "sleva100") {
+      console.log("spravny kod");
+      setShowDiscountForm(false);
+    } else {
+      console.log("spatny kod");
+    }
+  };
 
   return (
     <>
@@ -29,67 +44,54 @@ const ShoppingCart = () => {
         <h1 className="text-2xl font-bold text-gray-900">Kosik:</h1>
         <div className="flex flex-col gap-4">
           {cart.map((item, index) => (
-            <div key={index} className="flex gap-40">
-              <div className="">
-                <h2>Produkt</h2>
-                <p>{item.produkt}</p>
-              </div>
-              <div>
-                <h2>Dostupnost</h2>
-                <p>{item.dostupnost}</p>
-              </div>
-              <div>
-                <h2>Mnozstvi</h2>
-                <input
-                  type="number"
-                  value={item.mnozstvi}
-                  onChange={(event) =>
-                    setCart((prevCart) =>
-                      changeQuantity(prevCart, event.target.value, index)
-                    )
-                  }
-                  className="w-12 text-center border border-gray-300 rounded"
-                />
-              </div>
-              <div>
-                <h2>Cena za kus</h2>
-                <p>{item.cena_za_kus}</p>
-              </div>
-              <div>
-                <h2>Cena vc. DPH</h2>
-                <p>{item.mnozstvi * item.cena_za_kus}</p>
-              </div>
-              <div>
-                <h2>Removal</h2>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setCart((prevCart) => removeFromCart(prevCart, index))
-                  }
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold px-1 rounded"
-                >
-                  X
-                </button>
-              </div>
-            </div>
+            <CartItem
+              key={item.id}
+              item={item}
+              index={index}
+              setCart={setCart}
+            />
           ))}
         </div>
       </div>
+
+      {/* vypocet celkove ceny kosiku */}
       <div className="priceCalc">
         <h2 className="font-bold text-gray-900">Celkova Cena</h2>
         <p>{getCartPrice(cart)} Kč</p>
       </div>
-      <div className="discountCode">
-        {discountField && (
+
+      {/* conditional zobrazeni formu na slevu */}
+      {showDiscountForm && (
+        <div className="checkBox flex flex-col">
           <div>
-            <label>
+            <input
+              type="checkbox"
+              id="displayForm"
+              onClick={() => setShowDiscountField((prev) => !prev)}
+            />
+            <label htmlFor="displayForm">
               Mám dárkový poukaz, slevový kupón nebo kód na dárek
-              <input type="checkbox" />
             </label>
-            <input type="text" placeholder="hello world"></input>
           </div>
-        )}
-      </div>
+          {showDiscountField && (
+            <div>
+              <input
+                type="text"
+                placeholder="hi"
+                onChange={(e) => setDiscountCode(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => checkDiscountCode(discountCode)}
+              >
+                Pouzit slevu
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* progress bar */}
       <div className="progressBar">
         <h2>{getFreeShippingMessage(cart)}</h2>
         <div

@@ -12,13 +12,13 @@ export const removeFromCart = (cart, itemIndex) => {
 export const changeQuantity = (cart, value, itemIndex) => {
   const updatedValue = Number(value);
   if (updatedValue < 1) {
-    return cart; // Return the unchanged cart if the value is less than 1
+    return cart;
   }
   return cart.map((item, i) => {
     if (i === itemIndex) {
       return { ...item, mnozstvi: updatedValue };
     }
-    return item; // Return the unchanged item for other indices
+    return item;
   });
 };
 
