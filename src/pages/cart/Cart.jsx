@@ -3,7 +3,7 @@ import {
   getCartPrice,
   getFreeShippingMessage,
   getProgressShipping,
-} from "./utils/cartUtil";
+} from "../utils/cartUtil";
 
 import CartItem from "./CartItem";
 

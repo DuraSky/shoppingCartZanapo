@@ -1,5 +1,5 @@
 import React from "react";
-import { removeFromCart, changeQuantity } from "./utils/cartUtil";
+import { removeFromCart, changeQuantity } from "../utils/cartUtil";
 
 const CartItem = ({ item, setCart, index }) => {
   const handleQuantityChange = (event) => {
