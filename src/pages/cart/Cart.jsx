@@ -1,34 +1,23 @@
-import { useState, useEffect, React } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   getCartPrice,
   getFreeShippingMessage,
   getProgressShipping,
 } from "../utils/cartUtil";
-
+import "./cartStyle.scss";
 import CartItem from "./CartItem";
+import { CartContext } from "./CartProvider";
 
-const ShoppingCart = () => {
-  const [cart, setCart] = useState([]);
+const ShoppingCart = ({ showDiscountForm, setShowDiscountForm }) => {
+  const { cart, cartTotal } = useContext(CartContext);
 
-  //staty pro slevovy kupon
   const [discountCode, setDiscountCode] = useState("");
-  const [showDiscountForm, setShowDiscountForm] = useState(true); //for the whole form element, display on load
-  const [showDiscountField, setShowDiscountField] = useState(false); //only for the input element, don't display on load
+  const [showDiscountField, setShowDiscountField] = useState(false);
 
-  //fetch jsonu
-  useEffect(() => {
-    fetch("./assets/products.json")
-      .then((response) => response.json())
-      .then((data) => setCart(data.cart))
-      .catch((error) => console.error("Error fetching JSON:", error));
-  }, []);
-
-  // Console logger to check cart status on every update
   useEffect(() => {
     console.log(cart);
   }, [cart]);
 
-  // prozatimni kontrola slevoveho kodu
   const checkDiscountCode = (discountCode) => {
     if (discountCode === "sleva100") {
       console.log("spravny kod");
@@ -40,29 +29,27 @@ const ShoppingCart = () => {
 
   return (
     <>
-      <div className="insideTheCart">
-        <h1 className="text-2xl font-bold text-gray-900">Kosik:</h1>
-        <div className="flex flex-col gap-4">
-          {cart.map((item, index) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              index={index}
-              setCart={setCart}
-            />
-          ))}
+      <div className="cart">
+        <div className="cartHeaders">
+          <h2>Produkt</h2>
+          <h2>Dostupnost</h2>
+          <h2>Množství</h2>
+          <h2>Cena za kus</h2>
+          <h2>Cena vc. DPH</h2>
+          <h2>Removal</h2>
         </div>
+        {cart.map((item, index) => (
+          <CartItem key={item.id} item={item} index={index} />
+        ))}
       </div>
 
-      {/* vypocet celkove ceny kosiku */}
       <div className="priceCalc">
-        <h2 className="font-bold text-gray-900">Celkova Cena</h2>
-        <p>{getCartPrice(cart)} Kč</p>
+        <h2>Celkova Cena</h2>
+        <p>{cartTotal} Kč</p>
       </div>
 
-      {/* conditional zobrazeni formu na slevu */}
       {showDiscountForm && (
-        <div className="checkBox flex flex-col">
+        <div className="discount">
           <div>
             <input
               type="checkbox"
@@ -91,7 +78,6 @@ const ShoppingCart = () => {
         </div>
       )}
 
-      {/* progress bar */}
       <div className="progressBar">
         <h2>{getFreeShippingMessage(cart)}</h2>
         <div

@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "./CartProvider";
 import { removeFromCart, changeQuantity } from "../utils/cartUtil";
+import "./cartStyle.scss";
 
-const CartItem = ({ item, setCart, index }) => {
+const CartItem = ({ item, index }) => {
+  const { setCart } = useContext(CartContext);
+
   const handleQuantityChange = (event) => {
     const value = event.target.value;
     setCart((prevCart) => changeQuantity(prevCart, value, index));
@@ -12,17 +16,14 @@ const CartItem = ({ item, setCart, index }) => {
   };
 
   return (
-    <div key={index} className="flex gap-40">
+    <div key={index} className="cartItem">
       <div>
-        <h2>Produkt</h2>
         <p>{item.produkt}</p>
       </div>
       <div>
-        <h2>Dostupnost</h2>
         <p>{item.dostupnost}</p>
       </div>
       <div>
-        <h2>Mnozstvi</h2>
         <input
           type="number"
           value={item.mnozstvi}
@@ -31,15 +32,12 @@ const CartItem = ({ item, setCart, index }) => {
         />
       </div>
       <div>
-        <h2>Cena za kus</h2>
         <p>{item.cena_za_kus}</p>
       </div>
       <div>
-        <h2>Cena vc. DPH</h2>
         <p>{item.mnozstvi * item.cena_za_kus}</p>
       </div>
       <div>
-        <h2>Removal</h2>
         <button
           type="button"
           onClick={handleRemove}
