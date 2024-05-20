@@ -7,9 +7,11 @@ import ShoppingCart from "./pages/cart/Cart";
 import Shipping from "./pages/shipping/Shipping";
 import PersonalInfo from "./pages/personalInfo/PersonalInfo";
 import { CartProvider } from "./pages/cart/CartProvider";
+import { ShippingProvider } from "./pages/shipping/ShippingProvider";
 
 const App = () => {
   const [showDiscountForm, setShowDiscountForm] = useState(true);
+  const [payment, setPayment] = useState("CreditCard");
 
   const router = createBrowserRouter([
     {
@@ -27,7 +29,7 @@ const App = () => {
         },
         {
           path: "shipping",
-          element: <Shipping />,
+          element: <Shipping payment={payment} setPayment={setPayment} />,
         },
         {
           path: "info",
@@ -43,7 +45,9 @@ const App = () => {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <CartProvider>
-      <App />
+      <ShippingProvider>
+        <App />
+      </ShippingProvider>
     </CartProvider>
   </React.StrictMode>
 );

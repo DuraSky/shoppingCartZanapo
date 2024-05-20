@@ -1,0 +1,113 @@
+{
+  "deliveryOptions": [
+    {
+      "type": "DORUČENÍ AŽ K VÁM DOMŮ",
+      "methods": [
+        {
+          "name": "Balík Do ruky",
+          "options": [
+            { "method": "Platební kartou online", "price": "0" },
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Dobírka", "price": 49 },
+            { "method": "Na splátky - Home Credit", "price": "0" }
+          ],
+          "price": 119
+        },
+        {
+          "name": "PPL doručení na adresu",
+          "options": [
+            { "method": "Platební kartou online", "price": "0" },
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Dobírka", "price": 49 },
+            { "method": "Na splátky - Home Credit", "price": "0" }
+          ],
+          "price": 119
+        },
+        {
+          "name": "Nejvýhodnější doručení na adresu",
+          "options": [
+            { "method": "Platební kartou online", "price": "0" },
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Dobírka", "price": 49 },
+            { "method": "Na splátky - Home Credit", "price": "0" }
+          ],
+          "price": 115
+        }
+      ]
+    },
+    {
+      "type": "DORUČENÍ NA VÝDEJNÍ MÍSTO",
+      "methods": [
+        {
+          "name": "Zásilkovna",
+          "options": [
+            { "method": "Platební kartou online", "price": "0" },
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Dobírka", "price": 49 },
+            { "method": "Na splátky - Home Credit", "price": "0" }
+          ],
+          "price": 79
+        },
+        {
+          "name": "Balík Na poštu",
+          "options": [
+            { "method": "Platební kartou online", "price": "0" },
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Dobírka", "price": 49 },
+            { "method": "Na splátky - Home Credit", "price": "0" }
+          ],
+          "price": 79
+        },
+        {
+          "name": "Balíkovna",
+          "options": [
+            { "method": "Platební kartou online", "price": "0" },
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Dobírka", "price": 49 },
+            { "method": "Na splátky - Home Credit", "price": "0" }
+          ],
+          "price": 69
+        },
+        {
+          "name": "PPL ParceShop",
+          "options": [
+            { "method": "Platební kartou online", "price": "0" },
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Dobírka", "price": 49 },
+            { "method": "Na splátky - Home Credit", "price": "0" }
+          ],
+          "price": 79
+        }
+      ]
+    },
+    {
+      "type": "OSOBNÍ ODBĚR V OKOLÍ OSTRAVY",
+      "methods": [
+        {
+          "name": "Výdejní místo Bohumín",
+          "options": [
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Hotově na místě", "price": "0" },
+            { "method": "Comage kartou", "price": "0" }
+          ]
+        },
+        {
+          "name": "Výdejní místo Ostrava",
+          "options": [
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Hotově na místě", "price": "0" },
+            { "method": "Comage kartou", "price": "0" }
+          ]
+        },
+        {
+          "name": "Výdejní místo Karviná",
+          "options": [
+            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Hotově na místě", "price": "0" },
+            { "method": "Comage kartou", "price": "0" }
+          ]
+        }
+      ]
+    }
+  ]
+}

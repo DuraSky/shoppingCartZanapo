@@ -15,7 +15,7 @@ const ShoppingCart = ({ showDiscountForm, setShowDiscountForm }) => {
   const [showDiscountField, setShowDiscountField] = useState(false);
 
   useEffect(() => {
-    console.log(cart);
+    console.log("Current state of the cart", cart);
   }, [cart]);
 
   const checkDiscountCode = (discountCode) => {

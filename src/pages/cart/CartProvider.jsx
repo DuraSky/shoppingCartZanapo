@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useMemo } from "react";
-import loader from "../utils/loader";
+import { cartLoader } from "../utils/loader";
 import { getCartPrice } from "../utils/cartUtil";
 
 export const CartContext = createContext();
@@ -10,7 +10,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const initialCart = await loader();
+      const initialCart = await cartLoader();
       setCart(initialCart);
     };
     fetchData();
