@@ -67,10 +67,10 @@
           "name": "Balíkovna",
           "canShipDate": "Můžete mít zítra (středa 22. 5. 2024)",
           "options": [
-            { "method": "Platební kartou online", "price": "0" },
-            { "method": "Bankovní převod", "price": "0" },
+            { "method": "Platební kartou online", "price": 0 },
+            { "method": "Bankovní převod", "price": 0 },
             { "method": "Dobírka", "price": 49 },
-            { "method": "Na splátky - Home Credit", "price": "0" }
+            { "method": "Na splátky - Home Credit", "price": 0 }
           ],
           "price": 69
         },
