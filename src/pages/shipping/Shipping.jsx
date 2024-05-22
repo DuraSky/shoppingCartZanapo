@@ -8,10 +8,11 @@ import ShippingPriceOptions from "./shippingComponents/ShippingPriceOptions";
 import ShippingRecap from "./shippingComponents/ShippingRecap";
 
 const Shipping = () => {
-  const { shippingOptions } = useContext(ShippingContext);
+  const { state } = useContext(ShippingContext);
+  const { shippingOptions } = state;
 
   useEffect(() => {
-    console.log("Shipping Options in Shipping Component:", shippingOptions); // Add this log
+    console.log("Shipping Options in Shipping Component:", shippingOptions);
   }, [shippingOptions]);
 
   return (

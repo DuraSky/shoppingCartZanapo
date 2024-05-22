@@ -1,19 +1,17 @@
 import React from "react";
 import { useContext } from "react";
-import { ShippingContext } from "../ShippingProvider";
+import { ShippingContext, actionTypes } from "../ShippingProvider";
 
 const ShippingPriceOptions = () => {
-  const {
-    selectedShippingOptions,
-    setSelectedPaymentOption,
-    selectedShippingOption,
-    selectedPaymentOption,
-    setSelectedPaymentOptionPrice,
-  } = useContext(ShippingContext);
+  const { state, dispatch } = useContext(ShippingContext);
+  const { selectedShippingOptions, selectedPaymentOption } = state;
 
   const handlePriceMethodChange = (name, price) => {
-    setSelectedPaymentOption(name);
-    setSelectedPaymentOptionPrice(price);
+    dispatch({ type: actionTypes.SET_SELECTED_PAYMENT_OPTION, payload: name });
+    dispatch({
+      type: actionTypes.SET_SELECTED_PAYMENT_OPTION_PRICE,
+      payload: price,
+    });
   };
 
   return (

@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ShippingContext } from "../ShippingProvider";
-import ShippingOptionMethod from "./ShippingTypeMethod";
+import { ShippingContext, actionTypes } from "../ShippingProvider";
+import ShippingOptionMethod from "./ShippingOptionMethod";
 
 const ShippingOption = () => {
-  const { shippingOptions, selectedShippingOption } =
-    useContext(ShippingContext);
+  const { state, dispatch } = useContext(ShippingContext);
+  const { shippingOptions, selectedShippingOption } = state;
 
   if (!shippingOptions.deliveryOptions) {
     return <div>Loading...</div>; // Handle loading state if necessary
@@ -27,6 +27,25 @@ const ShippingOption = () => {
     setOpenOptionIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
+  const handleMethodSelection = (method) => {
+    dispatch({
+      type: actionTypes.SET_SELECTED_SHIPPING_OPTION,
+      payload: method.name,
+    });
+    dispatch({
+      type: actionTypes.SET_SELECTED_SHIPPING_PRICE,
+      payload: method.price,
+    });
+    dispatch({
+      type: actionTypes.SET_SELECTED_SHIPPING_OPTIONS,
+      payload: method.options,
+    });
+    dispatch({
+      type: actionTypes.SET_SELECTED_PAYMENT_OPTION,
+      payload: null,
+    });
+  };
+
   return (
     <>
       {shippingOptions.deliveryOptions.map((option, index) => (
@@ -35,7 +54,10 @@ const ShippingOption = () => {
             {option.type}
           </h2>
           {openOptionIndex === index && (
-            <ShippingOptionMethod methods={option.methods} />
+            <ShippingOptionMethod
+              methods={option.methods}
+              onSelectMethod={handleMethodSelection}
+            />
           )}
         </div>
       ))}

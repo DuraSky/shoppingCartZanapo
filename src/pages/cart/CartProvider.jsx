@@ -1,35 +1,23 @@
-import React, { createContext, useState, useEffect, useMemo } from "react";
+import React, { createContext, useEffect, useMemo, useReducer } from "react";
 import { cartLoader } from "../utils/loader";
-import { getCartPrice } from "../utils/cartUtil";
+import { initialState, actionTypes, cartReducer } from "./cartReducer";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
-  const [cartTotal, setCartTotal] = useState(0);
+  const [state, dispatch] = useReducer(cartReducer, initialState);
 
   useEffect(() => {
     const fetchData = async () => {
       const initialCart = await cartLoader();
-      setCart(initialCart);
+      dispatch({ type: actionTypes.SET_CART, payload: initialCart });
     };
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const total = getCartPrice(cart);
-    setCartTotal(total);
-  }, [cart]);
-
-  const value = useMemo(
-    () => ({
-      cart,
-      setCart,
-      cartTotal,
-      setCartTotal,
-    }),
-    [cart, cartTotal]
-  );
+  const value = useMemo(() => ({ state, dispatch }), [state]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
+
+export { actionTypes };

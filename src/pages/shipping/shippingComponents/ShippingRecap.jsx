@@ -4,13 +4,16 @@ import { CartContext } from "../../cart/CartProvider";
 import { ShippingContext } from "../ShippingProvider";
 
 const ShippingRecap = () => {
-  const { cart, cartTotal } = useContext(CartContext);
+  const { state: cartState } = useContext(CartContext);
+  const { state: shippingState } = useContext(ShippingContext);
+
+  const { cart, cartTotal } = cartState;
   const {
     selectedShippingOption,
     selectedShippingPrice,
     selectedPaymentOption,
     selectedPaymentOptionPrice,
-  } = useContext(ShippingContext);
+  } = shippingState;
 
   const cartTotalCalc = () => {
     const result =

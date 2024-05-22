@@ -1,18 +1,22 @@
 import React, { useContext } from "react";
-import { CartContext } from "./CartProvider";
-import { removeFromCart, changeQuantity } from "../utils/cartUtil";
+import { CartContext, actionTypes } from "./CartProvider";
 import "./cartStyle.scss";
 
 const CartItem = ({ item, index }) => {
-  const { setCart } = useContext(CartContext);
+  const { dispatch } = useContext(CartContext);
 
   const handleQuantityChange = (event) => {
-    const value = event.target.value;
-    setCart((prevCart) => changeQuantity(prevCart, value, index));
+    const value = Number(event.target.value);
+    if (value > 0) {
+      dispatch({
+        type: actionTypes.CHANGE_QUANTITY,
+        payload: { index, value },
+      });
+    }
   };
 
   const handleRemove = () => {
-    setCart((prevCart) => removeFromCart(prevCart, index));
+    dispatch({ type: actionTypes.REMOVE_FROM_CART, payload: index });
   };
 
   return (

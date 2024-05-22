@@ -9,7 +9,8 @@ import CartItem from "./CartItem";
 import { CartContext } from "./CartProvider";
 
 const ShoppingCart = ({ showDiscountForm, setShowDiscountForm }) => {
-  const { cart, cartTotal } = useContext(CartContext);
+  const { state } = useContext(CartContext);
+  const { cart, cartTotal } = state;
 
   const [discountCode, setDiscountCode] = useState("");
   const [showDiscountField, setShowDiscountField] = useState(false);

@@ -1,31 +1,37 @@
-import React, { createContext, useState, useEffect, useMemo } from "react";
+import React, { createContext, useReducer, useEffect, useMemo } from "react";
 import { shippingLoader } from "../utils/loader";
+import { initialState, actionTypes, shippingReducer } from "./shippingReducer";
 
 export const ShippingContext = createContext();
 
 export const ShippingProvider = ({ children }) => {
-  const [shippingOptions, setShippingOptions] = useState([]);
-  const [selectedShippingOption, setSelectedShippingOption] = useState(null);
-  const [selectedShippingPrice, setSelectedShippingPrice] = useState(null);
-  const [selectedShippingOptions, setSelectedShippingOptions] = useState([]);
-  const [selectedPaymentOption, setSelectedPaymentOption] = useState(null);
-  const [selectedPaymentOptionPrice, setSelectedPaymentOptionPrice] =
-    useState(null);
+  const [state, dispatch] = useReducer(shippingReducer, initialState);
 
   useEffect(() => {
     const fetchData = async () => {
       const initialShipping = await shippingLoader();
-      setShippingOptions(initialShipping);
+      dispatch({
+        type: actionTypes.SET_SHIPPING_OPTIONS,
+        payload: initialShipping,
+      });
 
-      // Set default selected shipping option and price based on the first available method
       if (
         initialShipping.deliveryOptions &&
         initialShipping.deliveryOptions.length > 0
       ) {
         const firstOption = initialShipping.deliveryOptions[0].methods[0];
-        setSelectedShippingOption(firstOption.name);
-        setSelectedShippingPrice(firstOption.price);
-        setSelectedShippingOptions(firstOption.options);
+        dispatch({
+          type: actionTypes.SET_SELECTED_SHIPPING_OPTION,
+          payload: firstOption.name,
+        });
+        dispatch({
+          type: actionTypes.SET_SELECTED_SHIPPING_PRICE,
+          payload: firstOption.price,
+        });
+        dispatch({
+          type: actionTypes.SET_SELECTED_SHIPPING_OPTIONS,
+          payload: firstOption.options,
+        });
       }
     };
     fetchData();
@@ -33,32 +39,10 @@ export const ShippingProvider = ({ children }) => {
 
   const value = useMemo(
     () => ({
-      shippingOptions,
-      setShippingOptions,
-
-      selectedShippingOption,
-      setSelectedShippingOption,
-
-      selectedShippingPrice,
-      setSelectedShippingPrice,
-
-      selectedShippingOptions,
-      setSelectedShippingOptions,
-
-      selectedPaymentOption,
-      setSelectedPaymentOption,
-
-      selectedPaymentOptionPrice,
-      setSelectedPaymentOptionPrice,
+      state,
+      dispatch,
     }),
-    [
-      shippingOptions,
-      selectedShippingOption,
-      selectedShippingPrice,
-      selectedShippingOptions,
-      selectedPaymentOption,
-      selectedPaymentOptionPrice,
-    ]
+    [state]
   );
 
   return (
@@ -67,3 +51,5 @@ export const ShippingProvider = ({ children }) => {
     </ShippingContext.Provider>
   );
 };
+
+export { actionTypes };
