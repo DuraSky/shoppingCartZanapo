@@ -33,7 +33,7 @@ export const testLoader = async () => {
   };
 
   const response = await fetch(
-    "https://f713-2001-1ae9-0-3d00-4bee-885-c3a7-9c21.ngrok-free.app/frontapi/v1/cart/products",
+    "https://e764-2001-1ae9-0-3d00-4bee-885-c3a7-9c21.ngrok-free.app/frontapi/v1/cart/products",
     requestOptions
   );
 

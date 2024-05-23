@@ -1,20 +1,26 @@
 import { useEffect } from "react";
 import { testLoader } from "../utils/loader";
+import Recap from "../recap/Recap";
 
 const PersonalInfo = () => {
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const initialTest = await testLoader();
-        console.log(initialTest);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const initialCart = await testLoader();
+  //       console.log("test loader:", initialCart);
+  //     } catch (error) {
+  //       console.error("Error in fetchData:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
-  return <h1>This is personal info</h1>;
+  return (
+    <>
+      <h1>This is shipping</h1>
+      <Recap />
+    </>
+  );
 };
 
 export default PersonalInfo;

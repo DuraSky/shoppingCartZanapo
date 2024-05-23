@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Navigate,
+} from "react-router-dom";
 
 import Layout from "./Layout";
 import ShoppingCart from "./pages/cart/Cart";
@@ -20,6 +24,10 @@ const App = () => {
       children: [
         {
           index: true,
+          element: <Navigate to="kosik" />,
+        },
+        {
+          path: "kosik",
           element: (
             <ShoppingCart
               showDiscountForm={showDiscountForm}
@@ -28,7 +36,7 @@ const App = () => {
           ),
         },
         {
-          path: "shipping",
+          path: "doprava",
           element: <Shipping payment={payment} setPayment={setPayment} />,
         },
         {

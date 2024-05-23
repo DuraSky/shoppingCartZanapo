@@ -1,26 +1,25 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ShippingContext, actionTypes } from "../ShippingProvider";
-import ShippingOptionMethod from "./ShippingOptionMethod";
+import { ShippingOptionMethod } from "./ShippingOptionMethod";
 
 const ShippingOption = () => {
   const { state, dispatch } = useContext(ShippingContext);
   const { shippingOptions, selectedShippingOption } = state;
 
-  if (!shippingOptions.deliveryOptions) {
-    return <div>Loading...</div>; // Handle loading state if necessary
-  }
-
   const [openOptionIndex, setOpenOptionIndex] = useState(null);
 
   useEffect(() => {
-    // Check if any of the methods are selected and set the corresponding index to open
-    shippingOptions.deliveryOptions.forEach((option, index) => {
-      option.methods.forEach((method) => {
-        if (method.name === selectedShippingOption) {
-          setOpenOptionIndex(index);
-        }
+    if (shippingOptions && shippingOptions.deliveryOptions) {
+      let foundIndex = null;
+      shippingOptions.deliveryOptions.forEach((option, index) => {
+        option.methods.forEach((method) => {
+          if (method.name === selectedShippingOption) {
+            foundIndex = index;
+          }
+        });
       });
-    });
+      setOpenOptionIndex(foundIndex);
+    }
   }, [shippingOptions, selectedShippingOption]);
 
   const toggleOption = (index) => {
@@ -46,9 +45,12 @@ const ShippingOption = () => {
     });
   };
 
+  // Ensure shippingOptions is defined to avoid errors
+  const deliveryOptions = shippingOptions?.deliveryOptions || [];
+
   return (
     <>
-      {shippingOptions.deliveryOptions.map((option, index) => (
+      {deliveryOptions.map((option, index) => (
         <div key={index} className="shippingTypes">
           <h2 onClick={() => toggleOption(index)} style={{ cursor: "pointer" }}>
             {option.type}

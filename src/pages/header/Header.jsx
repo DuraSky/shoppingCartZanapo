@@ -1,24 +1,15 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import NavLinks from "./navlinks/NavLinks";
 
-import "./headerStyle.scss";
-import logo from "../../../public/assets/logoZanapo.svg";
+import { StyledNav } from "./headerStyle";
+import { WrapperWithTopBar } from "./wrapper/WrapperWithTopBar";
 
 const Header = () => {
   return (
-    <nav>
-      <div className="wrapper">
-        <div className="topbar">
-          <img src={logo} width="300px" alt="" />
-          <p>info@zanapo.cz</p>
-        </div>
-      </div>
-      <div className="navLinks">
-        <NavLink to="/">Nakupni Kosik</NavLink>
-        <NavLink to="/shipping">Doprava a platba</NavLink>
-        <NavLink to="/info">Kontaktni Udaje</NavLink>
-      </div>
-    </nav>
+    <StyledNav>
+      <WrapperWithTopBar />
+      <NavLinks />
+    </StyledNav>
   );
 };
 

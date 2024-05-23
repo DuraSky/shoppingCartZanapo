@@ -2,7 +2,7 @@ import React from "react";
 import { ShippingContext } from "../ShippingProvider";
 import { useContext } from "react";
 
-const ShippingOptionMethod = ({ methods, onSelectMethod }) => {
+export const ShippingOptionMethod = ({ methods, onSelectMethod }) => {
   const { state } = useContext(ShippingContext);
   const { selectedShippingOption } = state;
   return (
@@ -17,14 +17,12 @@ const ShippingOptionMethod = ({ methods, onSelectMethod }) => {
               onChange={() => onSelectMethod(method)}
               checked={selectedShippingOption === method.name}
             />
-            <span>{method.name}</span>
-            <span>{method.price}</span>
-            <span>{method.canShipDate}</span>
+            <p>{method.name}</p>
+            <p>{method.price}</p>
+            <p>{method.canShipDate}</p>
           </label>
         </div>
       ))}
     </>
   );
 };
-
-export default ShippingOptionMethod;

@@ -5,7 +5,7 @@ import "./shippingStyle.scss";
 import ShippingOption from "./shippingComponents/ShippingOption";
 import ShippingPriceOptions from "./shippingComponents/ShippingPriceOptions";
 
-import ShippingRecap from "./shippingComponents/ShippingRecap";
+import Recap from "../recap/Recap";
 
 const Shipping = () => {
   const { state } = useContext(ShippingContext);
@@ -26,7 +26,7 @@ const Shipping = () => {
         <ShippingPriceOptions />
       </div>
 
-      <ShippingRecap />
+      <Recap />
     </>
   );
 };
