@@ -1,0 +1,25 @@
+{
+  "countries": [
+    {
+      "id": 0,
+      "name": "",
+      "deliveries": [
+        {
+          "id": 0,
+          "name": "",
+          "price": 0,
+          "driver": null,
+          "packageId": null,
+          "payments": [
+            {
+              "id": 0,
+              "name": "",
+              "price": 0,
+              "deliveryPaymentId": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

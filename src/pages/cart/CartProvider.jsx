@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useMemo, useReducer } from "react";
-import { cartLoader } from "../utils/loader";
+import { cartLoader, apiLoader } from "../utils/loader";
 import { initialState, actionTypes, cartReducer } from "./cartReducer";
 
 export const CartContext = createContext();
@@ -9,8 +9,17 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const initialCart = await cartLoader();
-      dispatch({ type: actionTypes.SET_CART, payload: initialCart });
+      try {
+        const initialCart = await cartLoader();
+        // const initialCart = await apiLoader();
+        if (initialCart) {
+          dispatch({ type: actionTypes.SET_CART, payload: initialCart });
+        } else {
+          console.error("Failed to load cart data");
+        }
+      } catch (error) {
+        console.error("Fetch data error:", error);
+      }
     };
     fetchData();
   }, []);

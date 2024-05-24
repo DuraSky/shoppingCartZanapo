@@ -8,6 +8,7 @@ import {
 const initialState = {
   cart: [],
   cartTotal: 0,
+  voucher: null,
 };
 
 const actionTypes = {
@@ -21,11 +22,12 @@ const actionTypes = {
 const cartReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_CART:
-      console.log(action);
+      const { cart_products, voucher } = action.payload;
       return {
         ...state,
-        cart: action.payload,
-        cartTotal: getCartPrice(action.payload),
+        cart: cart_products,
+        cartTotal: getCartPrice(cart_products),
+        voucher: voucher,
       };
 
     case actionTypes.REMOVE_FROM_CART:

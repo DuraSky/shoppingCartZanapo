@@ -51,11 +51,11 @@ const App = () => {
 };
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <CartProvider>
-      <ShippingProvider>
-        <App />
-      </ShippingProvider>
-    </CartProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <CartProvider>
+    <ShippingProvider>
+      <App />
+    </ShippingProvider>
+  </CartProvider>
+  // </React.StrictMode>
 );

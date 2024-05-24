@@ -1,0 +1,28 @@
+{
+  "cart_products": [
+    {
+      "bp_id": 47274,
+      "name": "Dřevěné šachy Magnát",
+      "price": 3490.0,
+      "quantity": 1
+    },
+    {
+      "bp_id": 47275,
+      "name": "Turnajové šachy velikost 7",
+      "price": 1738.8,
+      "quantity": 1
+    },
+    {
+      "bp_id": 473275,
+      "name": "Produkt BlaBla",
+      "price": 34,
+      "quantity": 1
+    }
+  ],
+  "voucher": {
+    "code": "43dd9ff2-6723-4a1c-93ab-7b2ddbbe3b82",
+    "used": false,
+    "value": 69.0,
+    "min_value": 0.0
+  }
+}

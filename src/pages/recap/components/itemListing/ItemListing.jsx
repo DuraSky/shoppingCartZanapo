@@ -6,10 +6,10 @@ export const ItemListing = ({ cart }) => {
     <>
       {cart.map((item, index) => {
         return (
-          <StyledProductRecap key={item.id}>
-            <p>{item.produkt}</p>
-            <p>{item.mnozstvi}x</p>
-            <p>{item.cena_za_kus * item.mnozstvi} Kč</p>
+          <StyledProductRecap key={index}>
+            <p>{item.name}</p>
+            <p>{item.quantity}x</p>
+            <p>{item.price * item.quantity} Kč</p>
           </StyledProductRecap>
         );
       })}

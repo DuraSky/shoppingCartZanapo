@@ -14,7 +14,7 @@ export const AllCartItems = ({ cart }) => {
         <h2>Removal</h2>
       </CartHeaders>
       {cart.map((item, index) => (
-        <CartItemRow key={item.id}>
+        <CartItemRow key={item.bp_id}>
           <CartItem item={item} index={index} />
         </CartItemRow>
       ))}

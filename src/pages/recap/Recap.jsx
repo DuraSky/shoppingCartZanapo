@@ -6,6 +6,7 @@ import { ItemListing } from "./components/itemListing/ItemListing";
 import { ShippingRecap } from "./components/shippingRecap/ShippingRecap";
 import { PaymentRecap } from "./components/paymentRecap/PaymentRecap";
 import { CartAndShippingTotal } from "./components/cartAndShippingTotal/CartAndShippingTotal";
+import { StyledRecap } from "./recapStyle";
 
 const Recap = () => {
   const { state: cartState } = useContext(CartContext);
@@ -20,12 +21,15 @@ const Recap = () => {
   } = shippingState;
 
   const cartTotalCalc = () => {
+    console.log(
+      "in calc" + cartTotal + selectedPaymentOptionPrice + selectedShippingPrice
+    );
     const result =
       cartTotal + selectedPaymentOptionPrice + selectedShippingPrice;
     return result;
   };
   return (
-    <div className="recap">
+    <StyledRecap>
       <h2>Rekaputilace objednavky</h2>
 
       <ItemListing cart={cart} />
@@ -41,7 +45,7 @@ const Recap = () => {
       />
 
       <CartAndShippingTotal cartTotalCalc={cartTotalCalc} />
-    </div>
+    </StyledRecap>
   );
 };
 

@@ -10,21 +10,22 @@ export const removeFromCart = (cart, itemIndex) => {
 };
 
 export const changeQuantity = (cart, value, itemIndex) => {
+  console.log("in changequantity", cart);
   const updatedValue = Number(value);
   if (updatedValue < 1) {
     return cart;
   }
   return cart.map((item, i) => {
     if (i === itemIndex) {
-      return { ...item, mnozstvi: updatedValue };
+      return { ...item, quantity: updatedValue };
     }
     return item;
   });
 };
 
-export const getCartPrice = (cart) => {
-  return cart.reduce(
-    (total, item) => total + item.mnozstvi * item.cena_za_kus,
+export const getCartPrice = (cart_products) => {
+  return cart_products.reduce(
+    (total, item) => total + item.quantity * item.price,
     0
   );
 };

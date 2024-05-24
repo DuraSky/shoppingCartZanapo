@@ -20,16 +20,17 @@ const CartItem = ({ item, index }) => {
 
   return (
     <>
-      <p>{item.produkt}</p>
-      <p>{item.dostupnost}</p>
+      <p>{item.name}</p>
+      {/* <p>{item.dostupnost}</p> */}
+      <p>placeholder</p>
       <input
         type="number"
-        value={item.mnozstvi}
+        value={item.quantity}
         onChange={handleQuantityChange}
         className="w-12 text-center border border-gray-300 rounded"
       />
-      <p>{item.cena_za_kus}</p>
-      <p>{item.mnozstvi * item.cena_za_kus}</p>
+      <p>{item.quantity}</p>
+      <p>{item.quantity * item.price}</p>
       <button
         type="button"
         onClick={handleRemove}

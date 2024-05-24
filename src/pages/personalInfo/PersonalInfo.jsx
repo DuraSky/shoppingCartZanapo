@@ -1,23 +1,19 @@
-import { useEffect } from "react";
-import { testLoader } from "../utils/loader";
 import Recap from "../recap/Recap";
+import { BillingAddress } from "./billingAddress/BillingAddress";
+import { CompanyAddress } from "./companyAddress/CompanyAddress";
+import { DeliveryAddress } from "./deliveryAddress/DeliveryAddress";
+import { Comment } from "./comment/Comment";
 
 const PersonalInfo = () => {
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const initialCart = await testLoader();
-  //       console.log("test loader:", initialCart);
-  //     } catch (error) {
-  //       console.error("Error in fetchData:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
   return (
     <>
-      <h1>This is shipping</h1>
+      <BillingAddress />
+
+      <DeliveryAddress />
+
+      <CompanyAddress />
+
+      <Comment />
       <Recap />
     </>
   );
