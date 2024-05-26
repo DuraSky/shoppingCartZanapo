@@ -1,65 +1,50 @@
 import React from "react";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 
-export const CompanyAddress = () => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  const formValues = watch();
-
-  useEffect(() => {
-    const savedFormData = localStorage.getItem("formData");
-    if (savedFormData) {
-      const parsedFormData = JSON.parse(savedFormData);
-      Object.keys(parsedFormData).forEach((key) => {
-        setValue(key, parsedFormData[key]);
-      });
-    }
-  }, [setValue]);
-
-  useEffect(() => {
-    localStorage.setItem("formData", JSON.stringify(formValues));
-  }, [formValues]);
-
+export const CompanyAddress = ({ register, errors }) => {
   return (
     <div>
-      <h2>Dodaci adresa</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <h2>Dodací adresa pro firmu</h2>
+      <div>
+        <label>Společnost</label>
         <input
           {...register("companyName", {
-            required: "Spolecnost nesmí být prázdna",
+            required: "Společnost nesmí být prázdná",
           })}
           type="text"
-          placeholder="Spolecnost"
+          placeholder="Společnost"
         />
         {errors.companyName && <div>{errors.companyName.message}</div>}
-
+      </div>
+      <div>
+        <label>IČ</label>
         <input
-          {...register("ic", { required: "IC nesmí být prázdné" })}
+          {...register("ic", {
+            required: "IČ nesmí být prázdné",
+            pattern: {
+              value: /^[0-9]{8}$/,
+              message: "IČ musí být osmiciferné číslo",
+            },
+          })}
           type="text"
-          placeholder="IC"
+          placeholder="IČ"
         />
         {errors.ic && <div>{errors.ic.message}</div>}
-
+      </div>
+      <div>
+        <label>DIČ</label>
         <input
-          {...register("dic", { required: "DIC nesmí být prázdné" })}
+          {...register("dic", {
+            required: "DIČ nesmí být prázdné",
+            pattern: {
+              value: /^[A-Z]{2}[0-9]{8,10}$/,
+              message: "DIČ musí být platné",
+            },
+          })}
           type="text"
-          placeholder="DIC"
+          placeholder="DIČ"
         />
         {errors.dic && <div>{errors.dic.message}</div>}
-
-        <button type="submit">odeslat</button>
-      </form>
+      </div>
     </div>
   );
 };

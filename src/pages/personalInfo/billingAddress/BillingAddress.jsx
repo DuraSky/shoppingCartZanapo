@@ -1,111 +1,100 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
 
-export const BillingAddress = () => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  const formValues = watch();
-
-  useEffect(() => {
-    const savedFormData = localStorage.getItem("formData");
-    if (savedFormData) {
-      const parsedFormData = JSON.parse(savedFormData);
-      Object.keys(parsedFormData).forEach((key) => {
-        setValue(key, parsedFormData[key]);
-      });
-    }
-  }, [setValue]);
-
-  useEffect(() => {
-    localStorage.setItem("formData", JSON.stringify(formValues));
-  }, [formValues]);
-
+export const BillingAddress = ({ register, errors }) => {
   return (
     <div>
-      <h2>Fakturacni a dodaci adresa</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <h2>Fakturační a dodací adresa</h2>
+      <div>
+        <label>Jméno</label>
         <input
           {...register("name", { required: "Jméno nesmí být prázdné" })}
           type="text"
-          placeholder="Jmeno"
+          placeholder="Jméno"
         />
         {errors.name && <div>{errors.name.message}</div>}
-
+      </div>
+      <div>
+        <label>Příjmení</label>
         <input
           {...register("surname", { required: "Příjmení nesmí být prázdné" })}
           type="text"
-          placeholder="Prijmeni"
+          placeholder="Příjmení"
         />
         {errors.surname && <div>{errors.surname.message}</div>}
-
+      </div>
+      <div>
+        <label>Ulice a číslo popisné</label>
         <input
           {...register("street", { required: "Ulice nesmí být prázdná" })}
           type="text"
-          placeholder="Ulice a cislo popisne"
+          placeholder="Ulice a číslo popisné"
         />
         {errors.street && <div>{errors.street.message}</div>}
-
+      </div>
+      <div>
+        <label>PSČ</label>
         <input
-          {...register("psc", { required: "PSČ nesmí být prázdná" })}
+          {...register("psc", {
+            required: "PSČ nesmí být prázdné",
+            pattern: {
+              value: /^[0-9]{5}$/,
+              message: "PSČ musí být pětimístné číslo",
+            },
+          })}
           type="text"
-          placeholder="PSC"
+          placeholder="PSČ"
         />
         {errors.psc && <div>{errors.psc.message}</div>}
-
+      </div>
+      <div>
+        <label>Město</label>
         <input
           {...register("town", { required: "Město nesmí být prázdné" })}
           type="text"
-          placeholder="Mesto"
+          placeholder="Město"
         />
         {errors.town && <div>{errors.town.message}</div>}
-
+      </div>
+      <div>
+        <label>Země</label>
         <input
           {...register("country")}
           type="text"
-          placeholder="Zeme"
-          value={"Česká republika"}
+          placeholder="Země"
+          value="Česká republika"
+          readOnly
         />
-
+      </div>
+      <div>
+        <label>Email</label>
         <input
           {...register("email", {
             required: "Email nesmí být prázdný",
-            validate: (value) => {
-              if (!value.includes("@")) {
-                return "Email musí obsahovat @";
-              }
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "Email musí být platná emailová adresa",
             },
           })}
           type="text"
           placeholder="Email"
         />
         {errors.email && <div>{errors.email.message}</div>}
-
+      </div>
+      <div>
+        <label>Telefon</label>
         <input
           {...register("phone", {
             required: "Telefon nesmí být prázdný",
-            validate: (value) => {
-              if (isNaN(value)) {
-                return "Telefon musí obsahovat pouze cisla";
-              }
+            pattern: {
+              value: /^[0-9]{9}$/,
+              message: "Telefon musí obsahovat pouze devítimístné číslo",
             },
           })}
           type="text"
           placeholder="Telefon"
         />
         {errors.phone && <div>{errors.phone.message}</div>}
-
-        <button type="submit">odeslat</button>
-      </form>
+      </div>
     </div>
   );
 };

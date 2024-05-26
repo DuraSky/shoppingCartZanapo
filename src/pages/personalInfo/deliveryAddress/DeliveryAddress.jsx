@@ -1,77 +1,81 @@
 import React from "react";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 
-export const DeliveryAddress = () => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
+export const DeliveryAddress = ({ register, errors }) => {
   return (
     <div>
-      <h2>Dodaci adresa</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <h2>Dodací adresa</h2>
+      <div>
+        <label>Dodací společnost</label>
         <input
           {...register("company", {
-            required: "Dodaci spolecnost nesmí být prázdna",
+            required: "Dodací společnost nesmí být prázdná",
           })}
           type="text"
-          placeholder="Dodaci spolecnost"
+          placeholder="Dodací společnost"
         />
         {errors.company && <div>{errors.company.message}</div>}
-
+      </div>
+      <div>
+        <label>Jméno</label>
         <input
           {...register("name", { required: "Jméno nesmí být prázdné" })}
           type="text"
-          placeholder="Jmeno"
+          placeholder="Jméno"
         />
         {errors.name && <div>{errors.name.message}</div>}
-
+      </div>
+      <div>
+        <label>Příjmení</label>
         <input
           {...register("surname", { required: "Příjmení nesmí být prázdné" })}
           type="text"
-          placeholder="Prijmeni"
+          placeholder="Příjmení"
         />
         {errors.surname && <div>{errors.surname.message}</div>}
-
+      </div>
+      <div>
+        <label>Ulice a číslo popisné</label>
         <input
           {...register("street", { required: "Ulice nesmí být prázdná" })}
           type="text"
-          placeholder="Ulice a cislo popisne"
+          placeholder="Ulice a číslo popisné"
         />
         {errors.street && <div>{errors.street.message}</div>}
-
+      </div>
+      <div>
+        <label>PSČ</label>
         <input
-          {...register("psc", { required: "PSČ nesmí být prázdná" })}
+          {...register("psc", {
+            required: "PSČ nesmí být prázdné",
+            pattern: {
+              value: /^[0-9]{5}$/,
+              message: "PSČ musí být pětimístné číslo",
+            },
+          })}
           type="text"
-          placeholder="PSC"
+          placeholder="PSČ"
         />
         {errors.psc && <div>{errors.psc.message}</div>}
-
+      </div>
+      <div>
+        <label>Město</label>
         <input
           {...register("town", { required: "Město nesmí být prázdné" })}
           type="text"
-          placeholder="Mesto"
+          placeholder="Město"
         />
         {errors.town && <div>{errors.town.message}</div>}
-
+      </div>
+      <div>
+        <label>Země</label>
         <input
           {...register("country")}
           type="text"
-          placeholder="Zeme"
-          value={"Česká republika"}
+          placeholder="Země"
+          value="Česká republika"
+          readOnly
         />
-
-        <button type="submit">odeslat</button>
-      </form>
+      </div>
     </div>
   );
 };
